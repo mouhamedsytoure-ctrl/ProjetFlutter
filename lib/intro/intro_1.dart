@@ -8,7 +8,16 @@ class Intro1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color:  Colors.green,
+        child: Center(
+          child: Text(
+            "Page 1",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 28
+            ),
+          ),
+        ),
+        color:  Colors.orange[100],
       ),
     );
   }

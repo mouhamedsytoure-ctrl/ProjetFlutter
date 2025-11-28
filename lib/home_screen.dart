@@ -14,13 +14,20 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   PageController _controller= PageController();
+  bool onLastPage = false;
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
       body: Stack(
         children:[
-          // mes diferents slides
+          // mes different slides
           PageView(
+            onPageChanged:(index){
+              setState(() {
+                onLastPage = (index==2);
+              });
+            }
+            ,
             controller: _controller,
             children: [
               Intro1(),
@@ -31,10 +38,42 @@ class _HomeScreenState extends State<HomeScreen> {
 
           //mes indicateurs
           Container(
-            alignment: Alignment(0, 0),
-            child: SmoothPageIndicator(
-                controller: _controller,
-                count: 3
+            alignment: Alignment(0, 0.9),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                //text passé
+                InkWell(
+                    child: Text("Passer"),
+                  onTap:(){
+                     _controller.jumpToPage(2);
+                  },
+                ),
+
+                //Les indicateurs
+                SmoothPageIndicator(
+                    controller: _controller,
+                    count: 3
+                ),
+
+                //Text suivant
+                onLastPage ?
+                GestureDetector(
+                  child: Text("Terminer"),
+                  onTap:(){
+
+                  },
+                ):
+                GestureDetector(
+                  child: Text("Suivant"),
+                  onTap:(){
+                    _controller.nextPage(
+                        duration: Duration(milliseconds: 500) ,
+                        curve: Curves.easeIn
+                    );
+                  },
+                )
+              ],
             ),
           )
         ]
